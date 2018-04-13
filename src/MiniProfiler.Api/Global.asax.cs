@@ -19,5 +19,21 @@ namespace MiniProfiler.Api
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        protected void Application_BeginRequest()
+        {
+            if (Request.IsLocal)
+            {
+                StackExchange.Profiling.MiniProfiler.Start();
+            }
+        }
+
+        protected void Application_EndRequest()
+        {
+            if (Request.IsLocal)
+            {
+                StackExchange.Profiling.MiniProfiler.Stop();
+            }
+        }
     }
 }
